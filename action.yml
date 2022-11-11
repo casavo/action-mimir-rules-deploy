@@ -1,0 +1,32 @@
+name: Mimir rules Deploy
+description: Deploys Mimir rules
+author: casavo
+branding:
+  icon: anchor
+  color: gray-dark
+inputs:
+  endpoint:
+    description: Mimir endpoint ({proto}://{host} format, required)
+    required: true
+  tenant:
+    description: Mimir tenant
+    required: false
+    default: default
+  namespace:
+    description: Mimir rules namespace (required)
+    required: true
+  path:
+    description: Local path of the rule file
+    required: true
+
+runs:
+  using: docker
+  image: grafana/mimirtool:latest
+  env:
+    MIMIR_ADDRESS: ${{ inputs.endpoint }}
+    MIMIR_TENANT_ID: ${{ inputs.tenant }}
+  args:
+    - rules
+    - sync
+    - --namespaces=${{ inputs.namespace }}
+    - ${{ inputs.path }}
