@@ -21,7 +21,7 @@ inputs:
 
 runs:
   using: docker
-  image: grafana/mimirtool:latest
+  image: docker://grafana/mimirtool:latest
   env:
     MIMIR_ADDRESS: ${{ inputs.endpoint }}
     MIMIR_TENANT_ID: ${{ inputs.tenant }}
